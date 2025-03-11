@@ -1,4 +1,4 @@
-package org.hawoline.presentation;
+package org.hawoline.domain;
 
 public class Actions {
   public void initActions() {
@@ -6,6 +6,5 @@ public class Actions {
   }
 
   public void turnActions() {
-    StringBuilder stringBuilder = new StringBuilder();
   }
 }

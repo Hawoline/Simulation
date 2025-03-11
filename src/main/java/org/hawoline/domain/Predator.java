@@ -7,11 +7,11 @@ public class Predator extends Creature {
     this.attackPower = attackPower;
   }
 
-  @Override public void move() {
-
+  @Override public void makeMove() {
+    // Потратить ход на атаку травоядного или передвижение
   }
 
-  public int attack(int herbivoreHealth) {
-    return herbivoreHealth - attackPower;
+  public void attack() {
+
   }
 }

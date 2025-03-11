@@ -5,7 +5,7 @@ public class Herbivore extends Creature {
     super(speed, health);
   }
 
-  @Override public void move() {
+  @Override public void makeMove() {
 
   }
 }
