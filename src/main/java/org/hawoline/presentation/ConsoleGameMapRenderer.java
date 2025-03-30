@@ -11,7 +11,7 @@ public class ConsoleGameMapRenderer {
     private static final char TREE = 'T';
     private static final char PREDATOR = 'P';
     private static final char EMPTY_SQUARE = '-';
-    //TODO Исправить
+
     public void render(GameMap gameMap) {
         StringBuilder line = new StringBuilder();
         for (int x = 0; x < GameMap.WIDTH; x++) {
