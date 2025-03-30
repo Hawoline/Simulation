@@ -1,46 +1,26 @@
 package org.hawoline.domain;
 
+import org.hawoline.domain.entity.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 public class GameMap {
   private final Map<Coordinates, Entity> entities;
-  private static final int WIDTH = 100;
-  private static final int HEIGHT = 100;
+  public static final int WIDTH = 20;
+  public static final int HEIGHT = 20;
   
   public GameMap(final Map<Coordinates, Entity> entities) {
     this.entities = new HashMap<>(entities);
   }
 
-  public GameMap addEachTypeOfEntityWithRandomPosition(int maxRandomEntityCount) {
-    Random random = new Random();
-    Map<Coordinates, Entity> result = new HashMap<>(entities);
-    for (int entity = 0; entity < random.nextInt(maxRandomEntityCount) + 1; entity++) {
-      result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
-          new Herbivore(1, random.nextInt(20) + 1));
-    }
-    for (int entity = 0; entity < random.nextInt(maxRandomEntityCount) + 1; entity++) {
-      result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
-          new Predator(1, random.nextInt(20) + 1, random.nextInt(5) + 1));
-    }
-    for (int entity = 0; entity < random.nextInt(maxRandomEntityCount) + 1; entity++) {
-      result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
-          new Grass());
-    }
-    for (int entity = 0; entity < random.nextInt(maxRandomEntityCount) + 1; entity++) {
-      result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
-          new Rock());
-    }
-    for (int entity = 0; entity < random.nextInt(maxRandomEntityCount) + 1; entity++) {
-      result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
-          new Tree());
-    }
-    return new GameMap(result);
-  }
-
   public Map<Coordinates, Entity> getEntities() {
     return new HashMap<>(entities);
+  }
+
+  public Entity getEntityIn(Coordinates coordinates) {
+    return entities.get(coordinates);
   }
 
     public GameMap removeAll() {
@@ -87,5 +67,9 @@ public class GameMap {
 
     }
     return new GameMap(result);
+  }
+
+  public boolean entityExitsIn(Coordinates coordinates) {
+    return entities.containsKey(coordinates);
   }
 }

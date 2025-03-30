@@ -1,4 +1,6 @@
-package org.hawoline.domain;
+package org.hawoline.domain.entity;
+
+import org.hawoline.domain.Coordinates;
 
 import java.util.Map;
 
