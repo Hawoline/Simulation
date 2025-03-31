@@ -13,5 +13,10 @@ public class Main {
     GameMap gameMapWithEntities = addRandomEntitiesToMapAction.addEachTypeOfEntityWithRandomPosition(emptyMap, 5);
 
     consoleGameMapRenderer.render(gameMapWithEntities);
+    System.out.println("G - Grass");
+    System.out.println("H - Herbivore");
+    System.out.println("P - Predator");
+    System.out.println("R - Rock");
+    System.out.println("T - Tree");
   }
 }
