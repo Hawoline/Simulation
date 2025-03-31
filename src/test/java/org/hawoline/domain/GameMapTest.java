@@ -2,6 +2,7 @@ package org.hawoline.domain;
 
 import java.util.HashMap;
 
+import org.hawoline.domain.entity.Herbivore;
 import org.hawoline.domain.entity.Predator;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ class GameMapTest {
     }
 
     @Test
-    protected void testConcreteEntityAdditionOnConcreteCoordinates() { //Да ну к черту тестить добавление, ааа
+    protected void testConcreteEntityAdditionOnConcreteCoordinates() { //Да ну к черту тестить добавление
         GameMap mapWithOnePredator = emptyMap.add(new Coordinates(2, 3), new Predator(2, 2, 6));
         assertEquals(1, mapWithOnePredator.getEntities().size());
     }
@@ -42,5 +43,14 @@ class GameMapTest {
         GameMap mapWithOnePredator = emptyMap.add(new Coordinates(2, 3), new Predator(2, 2, 6));
         assertTrue(mapWithOnePredator.entityExitsIn(new Coordinates(2, 3)));
         assertFalse(mapWithOnePredator.entityExitsIn(new Coordinates(2, 4)));
+    }
+
+    @Test
+    public void testMoveEntities() {
+        GameMap gameMapWithHerbivore = emptyMap.add(new Coordinates(1, 1), new Herbivore(1, 12));
+        GameMap herbivoreMovedMap = gameMapWithHerbivore.move(new Coordinates(1, 1), new Coordinates(2, 2));
+        assertEquals(1, herbivoreMovedMap.getEntities().size());
+        assertNull(herbivoreMovedMap.getEntityIn(new Coordinates(1, 1)));
+        assertNotNull(herbivoreMovedMap.getEntityIn(new Coordinates(2, 2)));
     }
 }
