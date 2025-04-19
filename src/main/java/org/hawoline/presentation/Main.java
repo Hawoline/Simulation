@@ -1,18 +1,18 @@
 package org.hawoline.presentation;
 
-import org.hawoline.domain.GameMap;
-import org.hawoline.domain.AddRandomEntitiesToMapAction;
+import org.hawoline.domain.Field;
+import org.hawoline.domain.AddRandomEntitiesToFieldAction;
 
 import java.util.HashMap;
 
 public class Main {
   public static void main(String[] args) {
-    ConsoleGameMapRenderer consoleGameMapRenderer = new ConsoleGameMapRenderer();
-    GameMap emptyMap = new GameMap(new HashMap<>());
-    AddRandomEntitiesToMapAction addRandomEntitiesToMapAction = new AddRandomEntitiesToMapAction();
-    GameMap gameMapWithEntities = addRandomEntitiesToMapAction.addEachTypeOfEntityWithRandomPosition(emptyMap, 5);
+    ConsoleFieldRenderer consoleFieldRenderer = new ConsoleFieldRenderer();
+    Field emptyMap = new Field(new HashMap<>());
+    AddRandomEntitiesToFieldAction addRandomEntitiesToFieldAction = new AddRandomEntitiesToFieldAction(emptyMap);
+    Field fieldWithEntities = addRandomEntitiesToFieldAction.addEachTypeOfEntitiesWithRandomPosition(10);
 
-    consoleGameMapRenderer.render(gameMapWithEntities);
+    consoleFieldRenderer.render(fieldWithEntities);
     System.out.println("G - Grass");
     System.out.println("H - Herbivore");
     System.out.println("P - Predator");

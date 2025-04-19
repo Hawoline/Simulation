@@ -1,4 +1,4 @@
 package org.hawoline.domain;
 
-public class Action {
+public interface Action {
 }

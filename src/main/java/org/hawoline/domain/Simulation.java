@@ -2,16 +2,16 @@ package org.hawoline.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.hawoline.presentation.ConsoleGameMapRenderer;
+import org.hawoline.presentation.ConsoleFieldRenderer;
 
 public class Simulation {
-  private final GameMap map;
+  private final Field map;
   private final int stepCounter;
-  private final ConsoleGameMapRenderer fieldRenderer;
+  private final ConsoleFieldRenderer fieldRenderer;
   private final List<Action> actions;
 
   private boolean isRunning;
-  public Simulation(GameMap map, int stepCounter, ConsoleGameMapRenderer consoleFieldRenderer, ArrayList<Action> actions) {
+  public Simulation(Field map, int stepCounter, ConsoleFieldRenderer consoleFieldRenderer, ArrayList<Action> actions) {
     this.map = map;
     this.stepCounter = stepCounter;
     this.fieldRenderer = consoleFieldRenderer;
