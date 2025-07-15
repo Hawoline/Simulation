@@ -39,11 +39,11 @@ public class ConsoleFieldRenderer {
 
     private char selectSpriteFor(Entity entity) {
         return switch (entity.getType()) {
-            case EntityType.GRASS -> GRASS;
-            case EntityType.ROCK -> ROCK;
-            case EntityType.HERBIVORE -> HERBIVORE;
-            case EntityType.TREE -> TREE;
-            case EntityType.PREDATOR -> PREDATOR;
+            case GRASS -> GRASS;
+            case ROCK -> ROCK;
+            case HERBIVORE -> HERBIVORE;
+            case TREE -> TREE;
+            case PREDATOR -> PREDATOR;
         };
     }
 }

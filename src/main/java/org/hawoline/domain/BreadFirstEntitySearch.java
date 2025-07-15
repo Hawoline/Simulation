@@ -52,7 +52,6 @@ public class BreadFirstEntitySearch implements EntitySearch {
     }
 
     private void fillPath(Coordinates start, Coordinates end) {
-        List<Coordinates> path = new ArrayList<>();
         path.add(end);
         Coordinates current = end;
         do {

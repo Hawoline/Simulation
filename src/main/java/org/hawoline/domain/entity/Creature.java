@@ -12,7 +12,10 @@ public abstract class Creature extends Entity {
     this.health = health;
   }
 
-  public abstract void makeMove(final Field field);
+  public abstract Field makeMove(final Field field, Coordinates coordinates);
 
-  protected abstract Coordinates move(final Field field, final Coordinates startCoordinates);
+
+  public int getSpeed() {
+    return speed;
+  }
 }

@@ -10,13 +10,9 @@ public class Predator extends Creature {
     this.attackPower = attackPower;
   }
 
-  @Override public void makeMove(final Field field) {
+  @Override public Field makeMove(final Field field, Coordinates coordinates) {
     // Потратить ход на атаку травоядного или передвижение
-  }
-
-  @Override
-  protected Coordinates move(Field field, Coordinates startCoordinates) {
-    return null;
+    return field;
   }
 
   public void attack() {

@@ -1,6 +1,9 @@
 package org.hawoline.domain.entity;
 
+import java.util.List;
+import org.hawoline.domain.BreadFirstEntitySearch;
 import org.hawoline.domain.Coordinates;
+import org.hawoline.domain.EntitySearch;
 import org.hawoline.domain.Field;
 
 public class Herbivore extends Creature {
@@ -8,13 +11,18 @@ public class Herbivore extends Creature {
     super(speed, health);
   }
 
-  @Override public void makeMove(final Field field) {
-
-  }
-
-  @Override
-  protected Coordinates move(Field field, Coordinates startCoordinates) {
-    return null;
+  @Override public Field makeMove(final Field field, Coordinates coordinates) {
+    EntitySearch grassSearch = new BreadFirstEntitySearch(field);
+    boolean grassFound = grassSearch.search(coordinates, EntityType.GRASS);
+    if (grassFound) {
+      List<Coordinates> path = grassSearch.getPath();
+      Coordinates nextCoordinates = path.get(path.size() - getSpeed() - 1);
+      if (path.size() == 2) {
+        return field.remove(path.get(0));
+      }
+      return field.move(coordinates, nextCoordinates);
+    }
+    return field;
   }
 
   @Override
