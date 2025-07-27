@@ -16,10 +16,10 @@ public class Herbivore extends Creature {
     boolean grassFound = grassSearch.search(coordinates, EntityType.GRASS);
     if (grassFound) {
       List<Coordinates> path = grassSearch.getPath();
-      Coordinates nextCoordinates = path.get(path.size() - getSpeed() - 1);
       if (path.size() == 2) {
         return field.remove(path.get(0));
       }
+      Coordinates nextCoordinates = getNextPosition(path);
       return field.move(coordinates, nextCoordinates);
     }
     return field;

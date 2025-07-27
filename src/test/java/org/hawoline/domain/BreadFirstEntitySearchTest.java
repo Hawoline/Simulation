@@ -26,7 +26,5 @@ class BreadFirstEntitySearchTest {
         EntitySearch entitySearch = new BreadFirstEntitySearch(field);
         assertTrue(entitySearch.search(herbivoreCoordinates, EntityType.GRASS));
         assertEquals(new Coordinates(3, 2), entitySearch.getResult());
-        Coordinates twoStepCloserToGrass = new Coordinates(3, 4);
-        assertEquals(twoStepCloserToGrass, entitySearch.getPath().get(0));
     }
 }

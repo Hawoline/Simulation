@@ -34,11 +34,10 @@ class HerbivoreTest {
     void testGrassNearby() {
         final Map<Coordinates, Entity> entities = new HashMap<>();
         entities.put(new Coordinates(3, 4), new Grass());
-        Coordinates herbivoreCoordinates = new Coordinates(3, 5);
         entities.put(herbivoreCoordinates, herbivore);
         final Field field = new Field(entities);
-        final Field notChanges = herbivore.makeMove(field, herbivoreCoordinates);
-        assertTrue(notChanges.entityExits(new Coordinates(3, 5)));
-        assertEquals(1, notChanges.entities().size());
+        final Field grassAte = herbivore.makeMove(field, herbivoreCoordinates);
+        assertTrue(grassAte.entityExits(new Coordinates(3, 5)));
+        assertEquals(1, grassAte.entities().size());
     }
 }
