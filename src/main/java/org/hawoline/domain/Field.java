@@ -28,7 +28,7 @@ public record Field(Map<Coordinates, Entity> entities) {
     return new Field(new HashMap<>());
   }
 
-  public Field add(Coordinates coordinates, Entity entity) {
+  public Field put(Coordinates coordinates, Entity entity) {
     Map<Coordinates, Entity> result = new HashMap<>(entities);
     result.put(coordinates, entity);
     return new Field(result);
@@ -42,7 +42,7 @@ public record Field(Map<Coordinates, Entity> entities) {
 
   public Field move(Coordinates from, Coordinates to) {
     Entity entity = entities.get(from);
-    return remove(from).add(to, entity);
+    return remove(from).put(to, entity);
   }
 
   public boolean entityExits(Coordinates coordinates) {

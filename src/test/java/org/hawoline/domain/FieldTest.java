@@ -19,7 +19,7 @@ class FieldTest {
 
     @Test
     protected void testConcreteEntityAdditionOnConcreteCoordinates() { //Да ну к черту тестить добавление
-        Field mapWithOnePredator = emptyMap.add(new Coordinates(2, 3), new Predator(2, 2, 6));
+        Field mapWithOnePredator = emptyMap.put(new Coordinates(2, 3), new Predator(2, 2, 6));
         assertEquals(1, mapWithOnePredator.entities().size());
     }
 
@@ -33,21 +33,21 @@ class FieldTest {
         testSingleRemove();
     }
     private void testSingleRemove() {
-        Field mapWithOnePredator = emptyMap.add(new Coordinates(2, 3), new Predator(2, 2, 6));
+        Field mapWithOnePredator = emptyMap.put(new Coordinates(2, 3), new Predator(2, 2, 6));
         Field emptyMapAfterRemovingPredator = mapWithOnePredator.remove(new Coordinates(2, 3));
         assertTrue(emptyMapAfterRemovingPredator.entities().isEmpty());
     }
 
     @Test
     public void testEntityExistsInSomeCoordinates() {
-        Field mapWithOnePredator = emptyMap.add(new Coordinates(2, 3), new Predator(2, 2, 6));
+        Field mapWithOnePredator = emptyMap.put(new Coordinates(2, 3), new Predator(2, 2, 6));
         assertTrue(mapWithOnePredator.entityExits(new Coordinates(2, 3)));
         assertFalse(mapWithOnePredator.entityExits(new Coordinates(2, 4)));
     }
 
     @Test
     public void testMoveEntities() {
-        Field fieldWithHerbivore = emptyMap.add(new Coordinates(1, 1), new Herbivore(1, 12));
+        Field fieldWithHerbivore = emptyMap.put(new Coordinates(1, 1), new Herbivore(1, 12));
         Field herbivoreMovedMap = fieldWithHerbivore.move(new Coordinates(1, 1), new Coordinates(2, 2));
         assertEquals(1, herbivoreMovedMap.entities().size());
         assertNull(herbivoreMovedMap.getEntityIn(new Coordinates(1, 1)));

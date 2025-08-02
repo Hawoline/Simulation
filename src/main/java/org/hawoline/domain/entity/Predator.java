@@ -16,28 +16,26 @@ public class Predator extends Creature {
   @Override public Field makeMove(final Field field, Coordinates coordinates) {
     EntitySearch grassSearch = new BreadFirstEntitySearch(field);
     boolean grassFound = grassSearch.search(coordinates, EntityType.HERBIVORE);
-    if (grassFound) {
-      List<Coordinates> path = grassSearch.getPath();
-      Coordinates nextCoordinates = getNextPosition(path);
-      if (path.size() == 2) {
-        Creature creature = (Creature) field.getEntityIn(nextCoordinates);
-        int herbivoreHealth = creature.getHealth() - getAttackPower();
-        if (herbivoreHealth < 1) {
-          return field.remove(path.get(0));
-        }
-        return field.add(path.get(0), new Herbivore(creature.getSpeed(), herbivoreHealth));
-      }
-      return field.move(coordinates, nextCoordinates);
+    if (!grassFound) {
+      return field;
     }
-    return field;
+    List<Coordinates> path = grassSearch.getPath();
+    Coordinates nextCoordinates = getNextPosition(path);
+    if (path.size() == 2) {
+      return attack(field, nextCoordinates, path.get(0));
+    }
+    return field.remove(coordinates).put(nextCoordinates, new Predator(getSpeed(), getHealth() - 1, attackPower));
   }
 
-  public void attack() {
-
-  }
-
-  public int getAttackPower() {
-    return attackPower;
+  private Field attack(Field field, Coordinates coordinates,
+      Coordinates herbivoreCoordinates) {
+    Creature creature = (Creature) field.getEntityIn(herbivoreCoordinates);
+    int herbivoreHealth = creature.getHealth() - attackPower;
+    if (herbivoreHealth < 1) {
+      return field.remove(herbivoreCoordinates)
+          .put(coordinates, new Predator(getSpeed(), getHealth() + 10, attackPower));
+    }
+    return field.put(herbivoreCoordinates, new Herbivore(creature.getSpeed(), herbivoreHealth));
   }
 
   @Override
