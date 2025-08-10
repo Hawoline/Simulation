@@ -11,11 +11,11 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AddRandomEntitiesToFieldActionTest {
+class AddRandomEntitiesActionTest {
     private final int MAX_RANDOM_EACH_TYPE_ENTITY_COUNT = 6;
-    private final Field emptyMap = new Field(new HashMap<>());
-    private final AddRandomEntitiesToFieldAction arrangeRandomEntitiesToMapAction = new AddRandomEntitiesToFieldAction(emptyMap, MAX_RANDOM_EACH_TYPE_ENTITY_COUNT);
-
+    private final Field emptyMap = new Field(new HashMap<>(), 20, 20);
+    private final AddRandomEntitiesAction
+        arrangeRandomEntitiesToMapAction = new AddRandomEntitiesAction();
     @Test
     protected void multiplyRandomEntityAddition() {
         for (int i = 0; i < 100; i++) {
@@ -25,7 +25,7 @@ class AddRandomEntitiesToFieldActionTest {
 
     @Test
     protected void testRandomEntityAddition() {
-        Field fieldWithEntities = arrangeRandomEntitiesToMapAction.act();
+        Field fieldWithEntities = arrangeRandomEntitiesToMapAction.addEachTypeOfEntitiesWithRandomPosition(emptyMap, MAX_RANDOM_EACH_TYPE_ENTITY_COUNT);
         final Map<Coordinates, Entity> entities = fieldWithEntities.entities();
         testEntityCountIsInterval(entities.size(), MAX_RANDOM_EACH_TYPE_ENTITY_COUNT, EntityType.values().length * MAX_RANDOM_EACH_TYPE_ENTITY_COUNT);
         Field moreEntitiesOnMap = arrangeRandomEntitiesToMapAction.addEachTypeOfEntitiesWithRandomPosition(fieldWithEntities,
@@ -38,7 +38,7 @@ class AddRandomEntitiesToFieldActionTest {
     }
 
     private void testTwoEntitiesNotEquals() {
-        Field doubleEntityMap = new AddRandomEntitiesToFieldAction(new AddRandomEntitiesToFieldAction(emptyMap).addRandomEntity()).addRandomEntity();
+        Field doubleEntityMap = arrangeRandomEntitiesToMapAction.addRandomEntity(arrangeRandomEntitiesToMapAction.addRandomEntity(emptyMap));
         Map<Coordinates, Entity> twoEntities = doubleEntityMap.entities();
         Set<Coordinates> twoEntityCoordinates = twoEntities.keySet();
         Iterator<Coordinates> coordinatesIterator = twoEntityCoordinates.iterator();
@@ -48,8 +48,8 @@ class AddRandomEntitiesToFieldActionTest {
     }
 
     private void testEntityCountIsInterval(int size, int minEntitiesCount, int maxEntitiesCount) {
-        assertTrue(size > minEntitiesCount);
-        assertTrue(size < maxEntitiesCount);
+        assertTrue(size >= minEntitiesCount);
+        assertTrue(size <= maxEntitiesCount);
     }
 
 }

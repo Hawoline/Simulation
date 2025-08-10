@@ -1,4 +1,5 @@
 package org.hawoline.domain;
 
-public interface Action {
+public interface Action<T, V> {
+  V act(T t);
 }

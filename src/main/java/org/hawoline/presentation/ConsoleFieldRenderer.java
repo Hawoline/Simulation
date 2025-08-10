@@ -3,7 +3,6 @@ package org.hawoline.presentation;
 import org.hawoline.domain.Coordinates;
 import org.hawoline.domain.Field;
 import org.hawoline.domain.entity.Entity;
-import org.hawoline.domain.entity.EntityType;
 
 public class ConsoleFieldRenderer {
     private static final char GRASS = 'G';
@@ -15,10 +14,10 @@ public class ConsoleFieldRenderer {
 
     public void render(Field field) {
         StringBuilder lines = new StringBuilder();
-        for (int x = 0; x < Field.WIDTH; x++) {
-            for (int y = 0; y < Field.HEIGHT; y++) {
+        for (int x = 0; x < field.width(); x++) {
+            for (int y = 0; y < field.height(); y++) {
                 if (field.entityExits(new Coordinates(x, y))) {
-                    lines.append(getEntitySprite(field.getEntityIn(new Coordinates(x, y))));
+                    lines.append(getEntitySprite(field.getEntity(new Coordinates(x, y))));
                 } else {
                     lines.append(getSpriteForEmptySquare());
                 }

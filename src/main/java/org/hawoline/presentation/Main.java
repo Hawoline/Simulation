@@ -1,16 +1,16 @@
 package org.hawoline.presentation;
 
 import org.hawoline.domain.Field;
-import org.hawoline.domain.AddRandomEntitiesToFieldAction;
+import org.hawoline.domain.AddRandomEntitiesAction;
 
 import java.util.HashMap;
 
 public class Main {
   public static void main(String[] args) {
     ConsoleFieldRenderer consoleFieldRenderer = new ConsoleFieldRenderer();
-    Field emptyMap = new Field(new HashMap<>());
-    AddRandomEntitiesToFieldAction addRandomEntitiesToFieldAction = new AddRandomEntitiesToFieldAction(emptyMap);
-    Field fieldWithEntities = addRandomEntitiesToFieldAction.addEachTypeOfEntitiesWithRandomPosition(10);
+    Field emptyMap = new Field(new HashMap<>(), 20, 20);
+    AddRandomEntitiesAction addRandomEntitiesAction = new AddRandomEntitiesAction();
+    Field fieldWithEntities = addRandomEntitiesAction.addEachTypeOfEntitiesWithRandomPosition(emptyMap, 10);
 
     consoleFieldRenderer.render(fieldWithEntities);
     System.out.println("G - Grass");

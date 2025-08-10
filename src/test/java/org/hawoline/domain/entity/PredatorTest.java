@@ -21,7 +21,7 @@ class PredatorTest {
   void initField() {
     entities.put(herbivoreCoordinates, herbivore);
     entities.put(predatorCoordinates, predator);
-    field = new Field(entities);
+    field = new Field(entities, 20, 20);
   }
 
   @Test
@@ -30,8 +30,9 @@ class PredatorTest {
     final Coordinates nextPredatorCoordinates = new Coordinates(2, 5);
     assertTrue(oneStepCloserToGrass.entityExits(nextPredatorCoordinates));
 
-    final Field damagedHerbivore = predator.makeMove(oneStepCloserToGrass, nextPredatorCoordinates);
-    assertEquals(8, ((Creature) (damagedHerbivore.getEntityIn(herbivoreCoordinates))).getHealth());
+    final Field damagedHerbivoreAndPredator = predator.makeMove(oneStepCloserToGrass, nextPredatorCoordinates);
+    assertEquals(8, ((Creature) (damagedHerbivoreAndPredator.getEntity(herbivoreCoordinates))).getHealth());
+    assertEquals(9, ((Creature) (damagedHerbivoreAndPredator.getEntity(nextPredatorCoordinates))).getHealth());
   }
 
   @Test

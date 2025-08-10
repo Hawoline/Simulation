@@ -29,13 +29,13 @@ public class Predator extends Creature {
 
   private Field attack(Field field, Coordinates coordinates,
       Coordinates herbivoreCoordinates) {
-    Creature creature = (Creature) field.getEntityIn(herbivoreCoordinates);
+    Creature creature = (Creature) field.getEntity(herbivoreCoordinates);
     int herbivoreHealth = creature.getHealth() - attackPower;
     if (herbivoreHealth < 1) {
       return field.remove(herbivoreCoordinates)
           .put(coordinates, new Predator(getSpeed(), getHealth() + 10, attackPower));
     }
-    return field.put(herbivoreCoordinates, new Herbivore(creature.getSpeed(), herbivoreHealth));
+    return field.put(herbivoreCoordinates, new Herbivore(creature.getSpeed(), herbivoreHealth)).put(coordinates, new Predator(getSpeed(), getHealth() - 1, attackPower));
   }
 
   @Override

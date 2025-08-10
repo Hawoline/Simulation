@@ -6,23 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import static org.hawoline.domain.Field.HEIGHT;
-import static org.hawoline.domain.Field.WIDTH;
-
-public class AddRandomEntitiesToFieldAction extends InitAction<Field> {
-    private final Field field;
-    private final int maxRandomConcreteEntityTypeCount;
-
-    public AddRandomEntitiesToFieldAction(Field field) {
-        this(field, 1);
-    }
-
-    public AddRandomEntitiesToFieldAction(Field field, int maxRandomConcreteEntityTypeCount) {
-        this.field = field;
-        this.maxRandomConcreteEntityTypeCount = maxRandomConcreteEntityTypeCount;
-    }
-
-    public Field addEachTypeOfEntityWithRandomPosition() {
+public class AddRandomEntitiesAction {
+    private static final int WIDTH = 20;
+    private static final int HEIGHT = 20;
+    public Field addEachTypeOfEntityWithRandomPosition(Field field) {
         Random random = new Random();
         Map<Coordinates, Entity> result = new HashMap<>(field.entities());
         result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
@@ -35,24 +22,14 @@ public class AddRandomEntitiesToFieldAction extends InitAction<Field> {
                 new Rock());
         result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
                 new Tree());
-        return new Field(result);
-    }
-
-    public Field addEachTypeOfEntitiesWithRandomPosition(int maxRandomConcreteEntityTypeCount) {
-        return addEachTypeOfEntitiesWithRandomPosition(field, maxRandomConcreteEntityTypeCount);
+        return new Field(result, WIDTH, HEIGHT);
     }
     public Field addEachTypeOfEntitiesWithRandomPosition(Field field, int maxRandomConcreteEntityTypeCount) {
-        Random random = new Random();
         Map<Coordinates, Entity> result = new HashMap<>(field.entities());
-        // [1, maxRandomEntityCount] - interval
-        for (int entity = 0; entity < random.nextInt(maxRandomConcreteEntityTypeCount) + 1; entity++) {
-            result.putAll(addEachTypeOfEntityWithRandomPosition().entities());
+        for (int entity = 0; entity < maxRandomConcreteEntityTypeCount; entity++) {
+            result.putAll(addEachTypeOfEntityWithRandomPosition(field).entities());
         }
-        return new Field(result);
-    }
-
-    public Field addRandomEntity() {
-        return addRandomEntity(field);
+        return new Field(result, WIDTH, HEIGHT);
     }
 
     public Field addRandomEntity(Field field) {
@@ -81,11 +58,6 @@ public class AddRandomEntitiesToFieldAction extends InitAction<Field> {
                 result.put(randomPosition, new Rock());
                 break;
         }
-        return new Field(result);
-    }
-
-    @Override
-    protected Field init() {
-        return addEachTypeOfEntitiesWithRandomPosition(field, maxRandomConcreteEntityTypeCount);
+        return new Field(result, WIDTH, HEIGHT);
     }
 }

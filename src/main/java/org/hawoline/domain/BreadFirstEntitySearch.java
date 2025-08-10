@@ -21,14 +21,14 @@ public class BreadFirstEntitySearch implements EntitySearch {
         childs.add(startCoordinates);
         while (!childs.isEmpty()) {
             Coordinates coordinates = childs.poll();
-            if (field.entityExits(coordinates) && field.getEntityIn(coordinates).getType().equals(target)) {
+            if (field.entityExits(coordinates) && field.getEntity(coordinates).getType().equals(target)) {
                 result = coordinates;
                 fillPath(startCoordinates, result);
                 return true;
             }
             visited.add(coordinates);
             for (Coordinates child: getNeighbourCoordinates(coordinates)) {
-                if (field.entityExits(child) && !field.getEntityIn(child).getType().equals(target)) {
+                if (field.entityExits(child) && !field.getEntity(child).getType().equals(target)) {
                     continue;
                 }
                 if (!visited.contains(child)) {
@@ -67,23 +67,21 @@ public class BreadFirstEntitySearch implements EntitySearch {
         Coordinates top = new Coordinates(coordinates.getX(), coordinates.getY() - 1);
         Coordinates bottom = new Coordinates(coordinates.getX(), coordinates.getY() + 1);
 
-        if (isCoordinatesAndBoundsInField(left)) {
+        if (field.isCoordinatesBounds(left)) {
             result.add(left);
         }
-        if (isCoordinatesAndBoundsInField(right)) {
+        if (field.isCoordinatesBounds(right)) {
             result.add(right);
         }
-        if (isCoordinatesAndBoundsInField(top)) {
+        if (field.isCoordinatesBounds(top)) {
             result.add(top);
         }
-        if (isCoordinatesAndBoundsInField(bottom)) {
+        if (field.isCoordinatesBounds(bottom)) {
             result.add(bottom);
         }
 
         return result;
     }
 
-    private boolean isCoordinatesAndBoundsInField(Coordinates coordinates) {
-        return coordinates.getX() >= 0 && coordinates.getY() >= 0 && coordinates.getX() < Field.WIDTH && coordinates.getY() < Field.HEIGHT;
-    }
+
 }
