@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AddRandomEntitiesActionTest {
     private final int MAX_RANDOM_EACH_TYPE_ENTITY_COUNT = 6;
-    private final Field emptyMap = new Field(new HashMap<>(), 20, 20);
+    private final World world = new World(new HashMap<>(), 20, 20);
     private final AddRandomEntitiesAction
         arrangeRandomEntitiesToMapAction = new AddRandomEntitiesAction();
     @Test
@@ -25,12 +25,15 @@ class AddRandomEntitiesActionTest {
 
     @Test
     protected void testRandomEntityAddition() {
-        Field fieldWithEntities = arrangeRandomEntitiesToMapAction.addEachTypeOfEntitiesWithRandomPosition(emptyMap, MAX_RANDOM_EACH_TYPE_ENTITY_COUNT);
-        final Map<Coordinates, Entity> entities = fieldWithEntities.entities();
+        final World world = new World(new HashMap<>(), 20, 20);
+        arrangeRandomEntitiesToMapAction.addEachTypeOfEntitiesWithRandomPosition(
+            world, MAX_RANDOM_EACH_TYPE_ENTITY_COUNT);
+        final Map<Coordinates, Entity> entities = world.entities();
         testEntityCountIsInterval(entities.size(), MAX_RANDOM_EACH_TYPE_ENTITY_COUNT, EntityType.values().length * MAX_RANDOM_EACH_TYPE_ENTITY_COUNT);
-        Field moreEntitiesOnMap = arrangeRandomEntitiesToMapAction.addEachTypeOfEntitiesWithRandomPosition(fieldWithEntities,
+        arrangeRandomEntitiesToMapAction.addEachTypeOfEntitiesWithRandomPosition(
+            world,
                 MAX_RANDOM_EACH_TYPE_ENTITY_COUNT);
-        final Map<Coordinates, Entity> moreEntities = moreEntitiesOnMap.entities();
+        final Map<Coordinates, Entity> moreEntities = world.entities();
         testEntityCountIsInterval(moreEntities.size(), MAX_RANDOM_EACH_TYPE_ENTITY_COUNT * 2,
             EntityType.values().length * MAX_RANDOM_EACH_TYPE_ENTITY_COUNT * 2);
 
@@ -38,8 +41,9 @@ class AddRandomEntitiesActionTest {
     }
 
     private void testTwoEntitiesNotEquals() {
-        Field doubleEntityMap = arrangeRandomEntitiesToMapAction.addRandomEntity(arrangeRandomEntitiesToMapAction.addRandomEntity(emptyMap));
-        Map<Coordinates, Entity> twoEntities = doubleEntityMap.entities();
+        arrangeRandomEntitiesToMapAction.addRandomEntity(world);
+        arrangeRandomEntitiesToMapAction.addRandomEntity(world);
+        Map<Coordinates, Entity> twoEntities = world.entities();
         Set<Coordinates> twoEntityCoordinates = twoEntities.keySet();
         Iterator<Coordinates> coordinatesIterator = twoEntityCoordinates.iterator();
         Coordinates first = coordinatesIterator.next();

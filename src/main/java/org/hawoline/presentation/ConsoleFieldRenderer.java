@@ -1,7 +1,7 @@
 package org.hawoline.presentation;
 
 import org.hawoline.domain.Coordinates;
-import org.hawoline.domain.Field;
+import org.hawoline.domain.World;
 import org.hawoline.domain.entity.Entity;
 
 public class ConsoleFieldRenderer {
@@ -12,12 +12,12 @@ public class ConsoleFieldRenderer {
     private static final char PREDATOR = 'P';
     private static final char EMPTY_SQUARE = '-';
 
-    public void render(Field field) {
+    public void render(World world) {
         StringBuilder lines = new StringBuilder();
-        for (int x = 0; x < field.width(); x++) {
-            for (int y = 0; y < field.height(); y++) {
-                if (field.entityExits(new Coordinates(x, y))) {
-                    lines.append(getEntitySprite(field.getEntity(new Coordinates(x, y))));
+        for (int x = 0; x < world.width(); x++) {
+            for (int y = 0; y < world.height(); y++) {
+                if (world.entityExits(new Coordinates(x, y))) {
+                    lines.append(getEntitySprite(world.getEntity(new Coordinates(x, y))));
                 } else {
                     lines.append(getSpriteForEmptySquare());
                 }

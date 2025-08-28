@@ -9,9 +9,9 @@ import java.util.Random;
 public class AddRandomEntitiesAction {
     private static final int WIDTH = 20;
     private static final int HEIGHT = 20;
-    public Field addEachTypeOfEntityWithRandomPosition(Field field) {
+    public World addEachTypeOfEntityWithRandomPosition(World world) {
         Random random = new Random();
-        Map<Coordinates, Entity> result = new HashMap<>(field.entities());
+        Map<Coordinates, Entity> result = new HashMap<>(world.entities());
         result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
                 new Herbivore(1, random.nextInt(20) + 1));
         result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
@@ -22,42 +22,40 @@ public class AddRandomEntitiesAction {
                 new Rock());
         result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
                 new Tree());
-        return new Field(result, WIDTH, HEIGHT);
+        return new World(result, WIDTH, HEIGHT);
     }
-    public Field addEachTypeOfEntitiesWithRandomPosition(Field field, int maxRandomConcreteEntityTypeCount) {
-        Map<Coordinates, Entity> result = new HashMap<>(field.entities());
+    public void addEachTypeOfEntitiesWithRandomPosition(World world, int maxRandomConcreteEntityTypeCount) {
+        Map<Coordinates, Entity> result = new HashMap<>(world.entities());
         for (int entity = 0; entity < maxRandomConcreteEntityTypeCount; entity++) {
-            result.putAll(addEachTypeOfEntityWithRandomPosition(field).entities());
+            result.putAll(addEachTypeOfEntityWithRandomPosition(world).entities());
         }
-        return new Field(result, WIDTH, HEIGHT);
+        world.putAll(result);
     }
 
-    public Field addRandomEntity(Field field) {
-        Map<Coordinates, Entity> result = new HashMap<>(field.entities());
+    public void addRandomEntity(World world) {
         Random random = new Random();
         final EntityType randomEntityType = EntityType.values()[random.nextInt(EntityType.values().length)];
         Coordinates randomPosition;
         do {
-            randomPosition = new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT));
-        } while (result.containsKey(randomPosition));
+            randomPosition = new Coordinates(random.nextInt(world.width()), random.nextInt(world.height()));
+        } while (world.entityExits(randomPosition));
         int randomHealth = random.nextInt(20) + 1;
         switch (randomEntityType) {
             case GRASS:
-                result.put(randomPosition, new Grass());
+                world.put(randomPosition, new Grass());
                 break;
             case HERBIVORE:
-                result.put(randomPosition, new Herbivore(1, randomHealth));
+                world.put(randomPosition, new Herbivore(1, randomHealth));
                 break;
             case PREDATOR:
-                result.put(randomPosition, new Predator(1, randomHealth, random.nextInt(5) + 1));
+                world.put(randomPosition, new Predator(1, randomHealth, random.nextInt(5) + 1));
                 break;
             case TREE:
-                result.put(randomPosition, new Tree());
+                world.put(randomPosition, new Tree());
                 break;
             case ROCK:
-                result.put(randomPosition, new Rock());
+                world.put(randomPosition, new Rock());
                 break;
         }
-        return new Field(result, WIDTH, HEIGHT);
     }
 }

@@ -3,47 +3,55 @@ package org.hawoline.domain.entity;
 import java.util.HashMap;
 import java.util.Map;
 import org.hawoline.domain.Coordinates;
-import org.hawoline.domain.Field;
+import org.hawoline.domain.World;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PredatorTest {
-  private Predator predator = new Predator(1, 10, 2);
-  private Coordinates predatorCoordinates = new Coordinates(3, 5);
-  private Coordinates herbivoreCoordinates = new Coordinates(1, 5);
-  private Herbivore herbivore = new Herbivore(1, 10);
-  private Map<Coordinates, Entity> entities = new HashMap<>();
-  private Field field;
+  private final Predator predator = new Predator(1, 10, 2);
+  private final Coordinates predatorCoordinates = new Coordinates(3, 5);
+  private final Coordinates herbivoreCoordinates = new Coordinates(1, 5);
+  private final Herbivore herbivore = new Herbivore(1, 10);
+  private final Map<Coordinates, Entity> entities = new HashMap<>();
+  private World world;
 
   @BeforeEach
   void initField() {
     entities.put(herbivoreCoordinates, herbivore);
     entities.put(predatorCoordinates, predator);
-    field = new Field(entities, 20, 20);
+    world = new World(entities, 20, 20);
   }
 
   @Test
   void testAttackHerbivore() {
-    final Field oneStepCloserToGrass = predator.makeMove(field, predatorCoordinates);
+    predator.makeMove(world, predatorCoordinates);
     final Coordinates nextPredatorCoordinates = new Coordinates(2, 5);
-    assertTrue(oneStepCloserToGrass.entityExits(nextPredatorCoordinates));
+    assertTrue(world.entityExits(nextPredatorCoordinates));
 
-    final Field damagedHerbivoreAndPredator = predator.makeMove(oneStepCloserToGrass, nextPredatorCoordinates);
-    assertEquals(8, ((Creature) (damagedHerbivoreAndPredator.getEntity(herbivoreCoordinates))).getHealth());
-    assertEquals(9, ((Creature) (damagedHerbivoreAndPredator.getEntity(nextPredatorCoordinates))).getHealth());
+    predator.makeMove(world, nextPredatorCoordinates);
+    assertEquals(8, ((Creature) (world.getEntity(herbivoreCoordinates))).getHealth());
+    assertEquals(8, ((Creature) (world.getEntity(nextPredatorCoordinates))).getHealth());
   }
 
   @Test
   void testHerbivoreDeath() {
-    final Field oneStepCloserToGrass = predator.makeMove(field, predatorCoordinates);
+    predator.makeMove(world, predatorCoordinates);
     final Coordinates nextPredatorCoordinates = new Coordinates(2, 5);
-    Field deathHerbivore = predator.makeMove(oneStepCloserToGrass, nextPredatorCoordinates);
+    predator.makeMove(world, nextPredatorCoordinates);
     for (int i = 0; i < 4; i++) {
-      deathHerbivore = predator.makeMove(deathHerbivore, nextPredatorCoordinates);
+      predator.makeMove(world, nextPredatorCoordinates);
     }
-    assertFalse(deathHerbivore.entityExits(herbivoreCoordinates));
-    assertEquals(1, deathHerbivore.entities().size());
+    assertFalse(world.entityExits(herbivoreCoordinates));
+    assertEquals(1, world.entities().size());
+  }
+
+  @Test
+  void testPredatorDeath() {
+    final Predator oneShotPredator = new Predator(1, 1, 1);
+    world.put(predatorCoordinates, oneShotPredator);
+    oneShotPredator.makeMove(world, predatorCoordinates);
+    assertEquals(1, world.entities().size());
   }
 }

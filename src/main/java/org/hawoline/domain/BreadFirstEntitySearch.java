@@ -5,15 +5,15 @@ import org.hawoline.domain.entity.EntityType;
 import java.util.*;
 
 public class BreadFirstEntitySearch implements EntitySearch {
-    private final Field field;
-    private final Set<Coordinates> visited = new HashSet<>();
-    private final Map<Coordinates, Coordinates> paths = new HashMap<>();
-    private final Queue<Coordinates> childs = new LinkedList<>();
+    private World world;
+    private Set<Coordinates> visited = new HashSet<>();
+    private Map<Coordinates, Coordinates> paths = new HashMap<>();
+    private Queue<Coordinates> childs = new LinkedList<>();
     private Coordinates result;
-    private final List<Coordinates> path = new ArrayList<>();
+    private List<Coordinates> path = new ArrayList<>();
 
-    public BreadFirstEntitySearch(Field field) {
-        this.field = field;
+    public BreadFirstEntitySearch(World world) {
+        this.world = world;
     }
 
     @Override
@@ -21,14 +21,14 @@ public class BreadFirstEntitySearch implements EntitySearch {
         childs.add(startCoordinates);
         while (!childs.isEmpty()) {
             Coordinates coordinates = childs.poll();
-            if (field.entityExits(coordinates) && field.getEntity(coordinates).getType().equals(target)) {
+            if (world.entityExits(coordinates) && world.getEntity(coordinates).getType().equals(target)) {
                 result = coordinates;
                 fillPath(startCoordinates, result);
                 return true;
             }
             visited.add(coordinates);
             for (Coordinates child: getNeighbourCoordinates(coordinates)) {
-                if (field.entityExits(child) && !field.getEntity(child).getType().equals(target)) {
+                if (world.entityExits(child) && !world.getEntity(child).getType().equals(target)) {
                     continue;
                 }
                 if (!visited.contains(child)) {
@@ -62,21 +62,21 @@ public class BreadFirstEntitySearch implements EntitySearch {
 
     private List<Coordinates> getNeighbourCoordinates(Coordinates coordinates) {
         List<Coordinates> result = new ArrayList<>();
-        Coordinates left = new Coordinates(coordinates.getX() - 1, coordinates.getY());
-        Coordinates right = new Coordinates(coordinates.getX() + 1, coordinates.getY());
-        Coordinates top = new Coordinates(coordinates.getX(), coordinates.getY() - 1);
-        Coordinates bottom = new Coordinates(coordinates.getX(), coordinates.getY() + 1);
+        Coordinates left = new Coordinates(coordinates.x() - 1, coordinates.y());
+        Coordinates right = new Coordinates(coordinates.x() + 1, coordinates.y());
+        Coordinates top = new Coordinates(coordinates.x(), coordinates.y() - 1);
+        Coordinates bottom = new Coordinates(coordinates.x(), coordinates.y() + 1);
 
-        if (field.isCoordinatesBounds(left)) {
+        if (world.coordinatesBounds(left)) {
             result.add(left);
         }
-        if (field.isCoordinatesBounds(right)) {
+        if (world.coordinatesBounds(right)) {
             result.add(right);
         }
-        if (field.isCoordinatesBounds(top)) {
+        if (world.coordinatesBounds(top)) {
             result.add(top);
         }
-        if (field.isCoordinatesBounds(bottom)) {
+        if (world.coordinatesBounds(bottom)) {
             result.add(bottom);
         }
 

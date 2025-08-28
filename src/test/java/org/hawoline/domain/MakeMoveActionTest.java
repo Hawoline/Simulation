@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MakeMoveActionTest {
-  private final Field emptyField = new Field(new HashMap<>(), 20, 20);
+  private final World world = new World(new HashMap<>(), 20, 20);
   /*
   G T - -
   - R - -
@@ -40,13 +40,12 @@ class MakeMoveActionTest {
   @Test
   void fillField() {
     final MakeMoveAction makeMoveAction = new MakeMoveAction();
-    final Field field = emptyField
-        .put(rockCoordinates, rock)
-        .put(treeCoordinates, tree)
-        .put(grassCoordinates, grass)
-        .put(secondGrassCoordinates, grass)
-        .put(herbivoreCoordinates, herbivore)
-        .put(predatorCoordinates, predator);
+    world.put(rockCoordinates, rock);
+    world.put(treeCoordinates, tree);
+    world.put(grassCoordinates, grass);
+    world.put(secondGrassCoordinates, grass);
+    world.put(herbivoreCoordinates, herbivore);
+    world.put(predatorCoordinates, predator);
 /*
   G T - -
   - R - -
@@ -54,12 +53,12 @@ class MakeMoveActionTest {
   - - H P
   - - - G
    */
-    final Field moved = makeMoveAction.act(field);
+    makeMoveAction.act(world);
 
     Coordinates herbivoreNextCoordinates = new Coordinates(2, 3);
-    assertTrue(moved.entityExits(herbivoreNextCoordinates));
-    assertEquals(7, ((Creature) moved.getEntity(herbivoreNextCoordinates)).getHealth());
+    assertTrue(world.entityExits(herbivoreNextCoordinates));
+    assertEquals(7, ((Creature) world.getEntity(herbivoreNextCoordinates)).getHealth());
 
-    assertEquals(9, ((Creature) moved.getEntity(new Coordinates(3, 3))).getHealth());
+    assertEquals(9, ((Creature) world.getEntity(new Coordinates(3, 3))).getHealth());
   }
 }

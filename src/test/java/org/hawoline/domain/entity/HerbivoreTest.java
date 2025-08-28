@@ -1,7 +1,7 @@
 package org.hawoline.domain.entity;
 
 import org.hawoline.domain.Coordinates;
-import org.hawoline.domain.Field;
+import org.hawoline.domain.World;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,14 +26,14 @@ class HerbivoreTest {
         entities.put(new Coordinates(3, 2), grass);
         entities.put(herbivoreCoordinates, herbivore);
         entities.put(fasterHerbivoreCoordinates, faster);
-        final Field field = new Field(entities, 20, 20);
-        final Field oneStepCloserToGrass = herbivore.makeMove(field, herbivoreCoordinates);
-        assertTrue(oneStepCloserToGrass.entityExits(new Coordinates(3, 4)));
+        final World world = new World(entities, 20, 20);
+        herbivore.makeMove(world, herbivoreCoordinates);
+        assertTrue(world.entityExits(new Coordinates(3, 4)));
 
-        final Field twoStepCloserToGrass = faster.makeMove(field, fasterHerbivoreCoordinates);
-        assertTrue(twoStepCloserToGrass.entityExits(new Coordinates(3, 4)));
-        final Field eatGrass = faster.makeMove(twoStepCloserToGrass, new Coordinates(3, 4));
-        assertTrue(eatGrass.entityExits(new Coordinates(3, 3)));
+        faster.makeMove(world, fasterHerbivoreCoordinates);
+        assertTrue(world.entityExits(new Coordinates(3, 4)));
+        faster.makeMove(world, new Coordinates(3, 4));
+        assertTrue(world.entityExits(new Coordinates(3, 3)));
     }
 
     @Test
@@ -41,9 +41,20 @@ class HerbivoreTest {
         final Map<Coordinates, Entity> entities = new HashMap<>();
         entities.put(new Coordinates(3, 4), new Grass());
         entities.put(herbivoreCoordinates, herbivore);
-        final Field field = new Field(entities, 20, 20);
-        final Field grassAte = herbivore.makeMove(field, herbivoreCoordinates);
-        assertTrue(grassAte.entityExits(new Coordinates(3, 5)));
-        assertEquals(1, grassAte.entities().size());
+        final World world = new World(entities, 20, 20);
+        herbivore.makeMove(world, herbivoreCoordinates);
+        assertTrue(world.entityExits(new Coordinates(3, 5)));
+        assertEquals(1, world.entities().size());
+    }
+
+
+    @Test
+    void testHungryHerbivoreDeath() {
+        final Map<Coordinates, Entity> entities = new HashMap<>();
+        Creature hungryHerbivore = new Herbivore(1, 1);
+        entities.put(herbivoreCoordinates, hungryHerbivore);
+        final World world = new World(entities, 20, 20);
+        hungryHerbivore.makeMove(world, herbivoreCoordinates);
+        assertTrue(world.entities().isEmpty());
     }
 }

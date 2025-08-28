@@ -21,9 +21,9 @@ class BreadFirstEntitySearchTest {
         entities.put(new Coordinates(3, 2), new Grass());
         Coordinates herbivoreCoordinates = new Coordinates(3, 5);
         entities.put(herbivoreCoordinates, herbivore);
-        final Field field = new Field(entities, 20, 20);
+        final World world = new World(entities, 20, 20);
 
-        EntitySearch entitySearch = new BreadFirstEntitySearch(field);
+        EntitySearch entitySearch = new BreadFirstEntitySearch(world);
         assertTrue(entitySearch.search(herbivoreCoordinates, EntityType.GRASS));
         assertEquals(new Coordinates(3, 2), entitySearch.getResult());
     }
