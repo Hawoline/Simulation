@@ -11,11 +11,11 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AddRandomEntitiesActionTest {
+class AddRandomEntitiesWorldActionTest {
     private final int MAX_RANDOM_EACH_TYPE_ENTITY_COUNT = 6;
     private final World world = new World(new HashMap<>(), 20, 20);
     private final AddRandomEntitiesAction
-        arrangeRandomEntitiesToMapAction = new AddRandomEntitiesAction();
+        arrangeRandomEntitiesToMapAction = new AddRandomEntitiesAction(MAX_RANDOM_EACH_TYPE_ENTITY_COUNT);
     @Test
     protected void multiplyRandomEntityAddition() {
         for (int i = 0; i < 100; i++) {
@@ -26,13 +26,12 @@ class AddRandomEntitiesActionTest {
     @Test
     protected void testRandomEntityAddition() {
         final World world = new World(new HashMap<>(), 20, 20);
-        arrangeRandomEntitiesToMapAction.addEachTypeOfEntitiesWithRandomPosition(
-            world, MAX_RANDOM_EACH_TYPE_ENTITY_COUNT);
+        arrangeRandomEntitiesToMapAction.act(
+            world);
         final Map<Coordinates, Entity> entities = world.entities();
         testEntityCountIsInterval(entities.size(), MAX_RANDOM_EACH_TYPE_ENTITY_COUNT, EntityType.values().length * MAX_RANDOM_EACH_TYPE_ENTITY_COUNT);
-        arrangeRandomEntitiesToMapAction.addEachTypeOfEntitiesWithRandomPosition(
-            world,
-                MAX_RANDOM_EACH_TYPE_ENTITY_COUNT);
+        arrangeRandomEntitiesToMapAction.act(
+            world);
         final Map<Coordinates, Entity> moreEntities = world.entities();
         testEntityCountIsInterval(moreEntities.size(), MAX_RANDOM_EACH_TYPE_ENTITY_COUNT * 2,
             EntityType.values().length * MAX_RANDOM_EACH_TYPE_ENTITY_COUNT * 2);

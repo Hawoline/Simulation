@@ -19,7 +19,10 @@ public abstract class Creature extends Entity {
     EntitySearch search = new BreadFirstEntitySearch(world);
     boolean foodFound = search.search(coordinates, getTarget());
     if (!foodFound) {
-      hungry(world, coordinates);
+      changeHealth(-1);
+      if (health < 1) {
+        world.remove(coordinates);
+      }
       return;
     }
     List<Coordinates> path = search.getPath();
@@ -28,8 +31,13 @@ public abstract class Creature extends Entity {
       return;
     }
     Coordinates nextPosition = getNextPosition(path);
+    changeHealth(-1);
+    if (health < 1) {
+      world.remove(coordinates);
+      return;
+    }
+
     world.move(coordinates, nextPosition);
-    hungry(world, nextPosition);
   }
 
   protected abstract EntityType getTarget();
@@ -42,13 +50,6 @@ public abstract class Creature extends Entity {
       nextPosition = 1;
     }
     return path.get(nextPosition);
-  }
-
-  private void hungry(World world, Coordinates creatureCoordinates) {
-    changeHealth(-1);
-    if (health < 1) {
-      world.remove(creatureCoordinates);
-    }
   }
   protected void changeHealth(int value) {
     health += value;

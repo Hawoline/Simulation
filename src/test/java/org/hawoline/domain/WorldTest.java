@@ -12,7 +12,7 @@ class WorldTest {
     private final World map = new World(new HashMap<>(), 20, 20);
     private final int MAX_ENTITY_COUNT = 6;
     private final AddRandomEntitiesAction
-        addRandomEntitiesToFieldAction = new AddRandomEntitiesAction();
+        addRandomEntitiesToFieldAction = new AddRandomEntitiesAction(MAX_ENTITY_COUNT);
 
     @Test
     protected void testEmptyMap() {
@@ -27,11 +27,10 @@ class WorldTest {
 
     @Test
     protected void testRemoveEntities() {
-        addRandomEntitiesToFieldAction.addEachTypeOfEntitiesWithRandomPosition(
-            map, MAX_ENTITY_COUNT);
+        addRandomEntitiesToFieldAction.act(map);
         map.removeAll();
         assertTrue(map.entities().isEmpty());
-        addRandomEntitiesToFieldAction.addEachTypeOfEntitiesWithRandomPosition(map, MAX_ENTITY_COUNT);
+        addRandomEntitiesToFieldAction.act(map);
         assertFalse(map.entities().isEmpty());
         map.removeAll();
         testSingleRemove();

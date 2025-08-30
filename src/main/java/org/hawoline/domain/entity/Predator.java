@@ -26,7 +26,6 @@ public class Predator extends Creature {
       world.remove(foodCoordinates);
       return;
     }
-    changeHealth(-1);
     world.put(foodCoordinates, new Herbivore(creature.getSpeed(), herbivoreHealth));
   }
 

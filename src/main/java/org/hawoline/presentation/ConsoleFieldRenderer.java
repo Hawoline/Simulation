@@ -1,10 +1,11 @@
 package org.hawoline.presentation;
 
 import org.hawoline.domain.Coordinates;
+import org.hawoline.domain.Renderer;
 import org.hawoline.domain.World;
 import org.hawoline.domain.entity.Entity;
 
-public class ConsoleFieldRenderer {
+public class ConsoleFieldRenderer implements Renderer {
     private static final char GRASS = 'G';
     private static final char ROCK = 'R';
     private static final char HERBIVORE = 'H';
@@ -12,6 +13,7 @@ public class ConsoleFieldRenderer {
     private static final char PREDATOR = 'P';
     private static final char EMPTY_SQUARE = '-';
 
+    @Override
     public void render(World world) {
         StringBuilder lines = new StringBuilder();
         for (int x = 0; x < world.width(); x++) {
@@ -26,6 +28,10 @@ public class ConsoleFieldRenderer {
         }
 
         System.out.println(lines);
+    }
+
+    @Override public void drawStepCounter(int stepCounter) {
+        System.out.println(stepCounter);
     }
 
     private String getSpriteForEmptySquare() {

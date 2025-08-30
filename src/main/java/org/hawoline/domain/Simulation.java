@@ -1,33 +1,48 @@
 package org.hawoline.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.hawoline.presentation.ConsoleFieldRenderer;
-
 public class Simulation {
-  private final World map;
-  private final int stepCounter;
-  private final ConsoleFieldRenderer fieldRenderer;
-  private final List<Action> actions;
+  private final World world;
+  private Renderer renderer;
+  private WorldAction makeMoveAction;
+  private WorldAction addGrassAction;
+  private int stepCounter = 0;
 
   private boolean isRunning;
-  public Simulation(World map, int stepCounter, ConsoleFieldRenderer consoleFieldRenderer, ArrayList<Action> actions) {
-    this.map = map;
-    this.stepCounter = stepCounter;
-    this.fieldRenderer = consoleFieldRenderer;
-    this.actions = actions;
+  public Simulation(World world, Renderer renderer) {
+    this.world = world;
+    this.renderer = renderer;
+    makeMoveAction = new MakeMoveAction();
+    addGrassAction = new AddGrassAction();
+  }
+
+  public void simulate() {
+    while (isRunning) {
+      nextTurn();
+      try {
+        Thread.sleep(2000);
+      } catch (InterruptedException e) {
+        throw new RuntimeException(e);
+      }
+    }
   }
 
   public void nextTurn() {
-    //simulate();
-    //render
+    makeMoveAction.act(world);
+    addGrassAction.act(world);
+    stepCounter++;
+    renderer.render(world);
+    renderer.drawStepCounter(stepCounter);
   }
 
   public void startSimulation() {
-
+    WorldAction initAction = new AddRandomEntitiesAction(5);
+    initAction.act(world);
+    renderer.render(world);
+    isRunning = true;
+    simulate();
   }
 
   public void endSimulation() {
-
+    isRunning = false;
   }
 }

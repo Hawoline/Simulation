@@ -6,25 +6,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class AddRandomEntitiesAction {
-    private static final int WIDTH = 20;
-    private static final int HEIGHT = 20;
+public class AddRandomEntitiesAction implements WorldAction {
+    private int maxRandomConcreteEntityTypeCount;
+
+    public AddRandomEntitiesAction(int maxRandomConcreteEntityTypeCount) {
+        this.maxRandomConcreteEntityTypeCount = maxRandomConcreteEntityTypeCount;
+    }
+
     public World addEachTypeOfEntityWithRandomPosition(World world) {
         Random random = new Random();
         Map<Coordinates, Entity> result = new HashMap<>(world.entities());
-        result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
+        result.put(new Coordinates(random.nextInt(world.width()), random.nextInt(world.height())),
                 new Herbivore(1, random.nextInt(20) + 1));
-        result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
-                new Predator(1, random.nextInt(20) + 1, random.nextInt(5) + 1));
-        result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
+        result.put(new Coordinates(random.nextInt(world.width()), random.nextInt(world.height())),
+                new Predator(2, random.nextInt(30) + 1, random.nextInt(10) + 1));
+        result.put(new Coordinates(random.nextInt(world.width()), random.nextInt(world.height())),
                 new Grass());
-        result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
+        result.put(new Coordinates(random.nextInt(world.width()), random.nextInt(world.height())),
                 new Rock());
-        result.put(new Coordinates(random.nextInt(WIDTH), random.nextInt(HEIGHT)),
+        result.put(new Coordinates(random.nextInt(world.width()), random.nextInt(world.height())),
                 new Tree());
-        return new World(result, WIDTH, HEIGHT);
+        return new World(result, world.width(), world.height());
     }
-    public void addEachTypeOfEntitiesWithRandomPosition(World world, int maxRandomConcreteEntityTypeCount) {
+    public void act(World world) {
         Map<Coordinates, Entity> result = new HashMap<>(world.entities());
         for (int entity = 0; entity < maxRandomConcreteEntityTypeCount; entity++) {
             result.putAll(addEachTypeOfEntityWithRandomPosition(world).entities());
