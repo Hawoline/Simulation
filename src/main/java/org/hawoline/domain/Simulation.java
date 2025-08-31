@@ -29,9 +29,9 @@ public class Simulation {
   public void nextTurn() {
     makeMoveAction.act(world);
     addGrassAction.act(world);
-    stepCounter++;
     renderer.render(world);
     renderer.drawStepCounter(stepCounter);
+    stepCounter++;
   }
 
   public void startSimulation() {

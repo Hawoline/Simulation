@@ -16,35 +16,34 @@ public abstract class Creature extends Entity {
   }
 
   public void makeMove(World world, Coordinates coordinates) {
-    EntitySearch search = new BreadFirstEntitySearch(world);
-    boolean foodFound = search.search(coordinates, getTarget());
-    if (!foodFound) {
-      changeHealth(-1);
-      if (health < 1) {
-        world.remove(coordinates);
-      }
-      return;
-    }
-    List<Coordinates> path = search.getPath();
-    if (path.size() == 2) {
-      tryEat(world, path.get(0));
-      return;
-    }
-    Coordinates nextPosition = getNextPosition(path);
-    changeHealth(-1);
-    if (health < 1) {
+    if (!world.entityExits(coordinates)) {
       world.remove(coordinates);
       return;
     }
-
-    world.move(coordinates, nextPosition);
+    EntitySearch search = new BreadFirstEntitySearch(world);
+    boolean foodFound = search.search(coordinates, getTarget());
+    if (foodFound) {
+      List<Coordinates> path = search.getPath();
+      if (path.size() == 2) {
+        tryEat(world, path.get(0));
+        return;
+      }
+      Coordinates nextPosition = getNextPosition(path, world);
+      world.move(coordinates, nextPosition);
+    } else {
+      changeHealth(-1);
+      if (health < 1) {
+        world.remove(coordinates);
+        return;
+      }
+    }
   }
 
   protected abstract EntityType getTarget();
 
   protected abstract void tryEat(World world, Coordinates foodCoordinates);
 
-  protected Coordinates getNextPosition(List<Coordinates> path) {
+  protected Coordinates getNextPosition(List<Coordinates> path, World world) {
     int nextPosition = path.size() - getSpeed() - 1;
     if (nextPosition < 1) {
       nextPosition = 1;

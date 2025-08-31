@@ -1,5 +1,7 @@
 package org.hawoline.domain;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import org.hawoline.domain.entity.*;
 
 import java.util.HashMap;
@@ -15,11 +17,11 @@ public class AddRandomEntitiesAction implements WorldAction {
 
     public World addEachTypeOfEntityWithRandomPosition(World world) {
         Random random = new Random();
-        Map<Coordinates, Entity> result = new HashMap<>(world.entities());
+        ConcurrentMap<Coordinates, Entity> result = new ConcurrentHashMap<>(world.entities());
         result.put(new Coordinates(random.nextInt(world.width()), random.nextInt(world.height())),
-                new Herbivore(1, random.nextInt(20) + 1));
+                new Herbivore(1, random.nextInt(30) + 1));
         result.put(new Coordinates(random.nextInt(world.width()), random.nextInt(world.height())),
-                new Predator(2, random.nextInt(30) + 1, random.nextInt(10) + 1));
+                new Predator(2, random.nextInt(30) + 1, random.nextInt(5) + 1));
         result.put(new Coordinates(random.nextInt(world.width()), random.nextInt(world.height())),
                 new Grass());
         result.put(new Coordinates(random.nextInt(world.width()), random.nextInt(world.height())),
@@ -29,7 +31,7 @@ public class AddRandomEntitiesAction implements WorldAction {
         return new World(result, world.width(), world.height());
     }
     public void act(World world) {
-        Map<Coordinates, Entity> result = new HashMap<>(world.entities());
+        ConcurrentMap<Coordinates, Entity> result = new ConcurrentHashMap<>(world.entities());
         for (int entity = 0; entity < maxRandomConcreteEntityTypeCount; entity++) {
             result.putAll(addEachTypeOfEntityWithRandomPosition(world).entities());
         }

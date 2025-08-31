@@ -2,6 +2,7 @@ package org.hawoline.domain;
 
 import java.util.HashMap;
 
+import java.util.concurrent.ConcurrentHashMap;
 import org.hawoline.domain.entity.Herbivore;
 import org.hawoline.domain.entity.Predator;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class WorldTest {
-    private final World map = new World(new HashMap<>(), 20, 20);
+    private final World map = new World(new ConcurrentHashMap<>(), 20, 20);
     private final int MAX_ENTITY_COUNT = 6;
     private final AddRandomEntitiesAction
         addRandomEntitiesToFieldAction = new AddRandomEntitiesAction(MAX_ENTITY_COUNT);

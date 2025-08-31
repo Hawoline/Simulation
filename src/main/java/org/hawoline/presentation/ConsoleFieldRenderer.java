@@ -19,6 +19,9 @@ public class ConsoleFieldRenderer implements Renderer {
         for (int x = 0; x < world.width(); x++) {
             for (int y = 0; y < world.height(); y++) {
                 if (world.entityExits(new Coordinates(x, y))) {
+                    if (world.getEntity(new Coordinates(x, y)) == null) {
+                        int a = 3;
+                    }
                     lines.append(getEntitySprite(world.getEntity(new Coordinates(x, y))));
                 } else {
                     lines.append(getSpriteForEmptySquare());

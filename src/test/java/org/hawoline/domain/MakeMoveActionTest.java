@@ -1,6 +1,7 @@
 package org.hawoline.domain;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import org.hawoline.domain.entity.Creature;
 import org.hawoline.domain.entity.Grass;
 import org.hawoline.domain.entity.Herbivore;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MakeMoveActionTest {
-  private final World world = new World(new HashMap<>(), 20, 20);
+  private final World world = new World(new ConcurrentHashMap<>(), 20, 20);
   /*
   G T - -
   - R - -

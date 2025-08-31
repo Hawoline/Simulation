@@ -1,21 +1,13 @@
 package org.hawoline.domain;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import org.hawoline.domain.entity.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public record World(Map<Coordinates, Entity> entities, int width, int height) {
-  public World(Map<Coordinates, Entity> entities, int width, int height) {
-    this.entities = new HashMap<>(entities);
-    this.width = width;
-    this.height = height;
-  }
-
-  @Override
-  public Map<Coordinates, Entity> entities() {
-    return new HashMap<>(entities);
-  }
+public record World(ConcurrentMap<Coordinates, Entity> entities, int width, int height) {
 
   public Entity getEntity(Coordinates coordinates) {
     return entities.get(coordinates);
@@ -32,7 +24,7 @@ public record World(Map<Coordinates, Entity> entities, int width, int height) {
     entities.put(coordinates, entity);
   }
 
-  public void putAll(Map<Coordinates, Entity> entities) {
+  public void putAll(ConcurrentMap<Coordinates, Entity> entities) {
     this.entities.putAll(entities);
   }
 
@@ -41,6 +33,10 @@ public record World(Map<Coordinates, Entity> entities, int width, int height) {
   }
 
   public void move(Coordinates from, Coordinates to) {
+    if (entities.get(from) == null) {
+      System.out.println("From x: " + from.x());
+      System.out.println("From y: " + from.y());
+    }
     entities.put(to, entities.remove(from));
   }
 

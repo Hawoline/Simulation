@@ -1,5 +1,6 @@
 package org.hawoline.presentation;
 
+import java.util.concurrent.ConcurrentHashMap;
 import org.hawoline.domain.Simulation;
 import org.hawoline.domain.World;
 import org.hawoline.domain.AddRandomEntitiesAction;
@@ -17,7 +18,7 @@ public class Main {
     System.out.println("T - Tree");
 
     ConsoleFieldRenderer consoleFieldRenderer = new ConsoleFieldRenderer();
-    World world = new World(new HashMap<>(), 20, 20);
+    World world = new World(new ConcurrentHashMap<>(), 20, 20);
 
     Simulation simulation = new Simulation(world, consoleFieldRenderer);
     simulation.startSimulation();
