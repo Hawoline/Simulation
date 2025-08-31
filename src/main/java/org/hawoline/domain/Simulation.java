@@ -1,18 +1,18 @@
 package org.hawoline.domain;
 
+import java.util.List;
+
 public class Simulation {
   private final World world;
   private Renderer renderer;
-  private WorldAction makeMoveAction;
-  private WorldAction addGrassAction;
+  private List<WorldAction> actions;
   private int stepCounter = 0;
 
   private boolean isRunning;
-  public Simulation(World world, Renderer renderer) {
+  public Simulation(World world, Renderer renderer, List<WorldAction> actions) {
     this.world = world;
     this.renderer = renderer;
-    makeMoveAction = new MakeMoveAction();
-    addGrassAction = new AddGrassAction();
+    this.actions = actions;
   }
 
   public void simulate() {
@@ -27,8 +27,9 @@ public class Simulation {
   }
 
   public void nextTurn() {
-    makeMoveAction.act(world);
-    addGrassAction.act(world);
+    for (WorldAction action: actions) {
+      action.act(world);
+    }
     renderer.render(world);
     renderer.drawStepCounter(stepCounter);
     stepCounter++;
