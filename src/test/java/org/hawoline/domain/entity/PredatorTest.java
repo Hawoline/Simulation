@@ -2,6 +2,9 @@ package org.hawoline.domain.entity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import org.hawoline.domain.Coordinates;
 import org.hawoline.domain.World;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +17,7 @@ class PredatorTest {
   private final Coordinates predatorCoordinates = new Coordinates(3, 5);
   private final Coordinates herbivoreCoordinates = new Coordinates(1, 5);
   private final Herbivore herbivore = new Herbivore(1, 10);
-  private final Map<Coordinates, Entity> entities = new HashMap<>();
+  private final ConcurrentMap<Coordinates, Entity> entities = new ConcurrentHashMap<>();
   private World world;
 
   @BeforeEach

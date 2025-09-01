@@ -5,6 +5,9 @@ import org.hawoline.domain.World;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,7 +25,7 @@ class HerbivoreTest {
 
     @Test
     void testSearchGrass() {
-        final Map<Coordinates, Entity> entities = new HashMap<>();
+        final ConcurrentMap<Coordinates, Entity> entities = new ConcurrentHashMap<>();
         entities.put(new Coordinates(3, 2), grass);
         entities.put(herbivoreCoordinates, herbivore);
         entities.put(fasterHerbivoreCoordinates, faster);
@@ -38,7 +41,7 @@ class HerbivoreTest {
 
     @Test
     void testGrassNearby() {
-        final Map<Coordinates, Entity> entities = new HashMap<>();
+        final ConcurrentMap<Coordinates, Entity> entities = new ConcurrentHashMap<>();
         entities.put(new Coordinates(3, 4), new Grass());
         entities.put(herbivoreCoordinates, herbivore);
         final World world = new World(entities, 20, 20);
@@ -50,7 +53,7 @@ class HerbivoreTest {
 
     @Test
     void testHungryHerbivoreDeath() {
-        final Map<Coordinates, Entity> entities = new HashMap<>();
+        final ConcurrentMap<Coordinates, Entity> entities = new ConcurrentHashMap<>();
         Creature hungryHerbivore = new Herbivore(1, 1);
         entities.put(herbivoreCoordinates, hungryHerbivore);
         final World world = new World(entities, 20, 20);

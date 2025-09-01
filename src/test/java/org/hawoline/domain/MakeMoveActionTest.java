@@ -56,7 +56,7 @@ class MakeMoveActionTest {
    */
     makeMoveAction.act(world);
 
-    Coordinates herbivoreNextCoordinates = new Coordinates(2, 3);
+    Coordinates herbivoreNextCoordinates = new Coordinates(2, 4);
     assertTrue(world.entityExits(herbivoreNextCoordinates));
     assertEquals(7, ((Creature) world.getEntity(herbivoreNextCoordinates)).getHealth());
 

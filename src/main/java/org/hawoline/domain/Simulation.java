@@ -19,7 +19,7 @@ public class Simulation {
     while (isRunning) {
       nextTurn();
       try {
-        Thread.sleep(2000);
+        Thread.sleep(1000);
       } catch (InterruptedException e) {
         throw new RuntimeException(e);
       }
@@ -30,8 +30,8 @@ public class Simulation {
     for (WorldAction action: actions) {
       action.act(world);
     }
-    renderer.render(world);
     renderer.drawStepCounter(stepCounter);
+    renderer.render(world);
     stepCounter++;
   }
 

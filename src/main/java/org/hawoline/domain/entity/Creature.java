@@ -9,6 +9,7 @@ import org.hawoline.domain.World;
 public abstract class Creature extends Entity {
   private int speed;
   private int health;
+  public boolean isMoved = false;
 
   public Creature(int speed, int health) {
     this.speed = speed;
@@ -28,13 +29,13 @@ public abstract class Creature extends Entity {
         tryEat(world, path.get(0));
         return;
       }
-      Coordinates nextPosition = getNextPosition(path, world);
+      Coordinates nextPosition = getNextPosition(path);
       world.move(coordinates, nextPosition);
+      isMoved = true;
     } else {
       changeHealth(-1);
       if (health < 1) {
         world.remove(coordinates);
-        return;
       }
     }
   }
@@ -43,7 +44,7 @@ public abstract class Creature extends Entity {
 
   protected abstract void tryEat(World world, Coordinates foodCoordinates);
 
-  protected Coordinates getNextPosition(List<Coordinates> path, World world) {
+  protected Coordinates getNextPosition(List<Coordinates> path) {
     int nextPosition = path.size() - getSpeed() - 1;
     if (nextPosition < 1) {
       nextPosition = 1;

@@ -9,7 +9,8 @@ class SimulationTest {
 
   @Test
   void test() {
-    World world = new World(new ConcurrentHashMap<>(), 10, 10);
+    World world = new World(new ConcurrentHashMap<>(), 20, 20);
 
+//    world.put();
   }
 }

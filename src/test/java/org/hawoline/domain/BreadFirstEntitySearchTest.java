@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +18,7 @@ class BreadFirstEntitySearchTest {
 
     @Test
     void testSearchGrass() {
-        final Map<Coordinates, Entity> entities = new HashMap<>();
+        final ConcurrentMap<Coordinates, Entity> entities = new ConcurrentHashMap<>();
         entities.put(new Coordinates(0, 1), new Grass());
         entities.put(new Coordinates(3, 2), new Grass());
         Coordinates herbivoreCoordinates = new Coordinates(3, 5);

@@ -8,12 +8,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AddRandomEntitiesWorldActionTest {
     private final int MAX_RANDOM_EACH_TYPE_ENTITY_COUNT = 6;
-    private final World world = new World(new HashMap<>(), 20, 20);
+    private final World world = new World(new ConcurrentHashMap<>(), 20, 20);
     private final AddRandomEntitiesAction
         arrangeRandomEntitiesToMapAction = new AddRandomEntitiesAction(MAX_RANDOM_EACH_TYPE_ENTITY_COUNT);
     @Test
@@ -25,7 +26,7 @@ class AddRandomEntitiesWorldActionTest {
 
     @Test
     protected void testRandomEntityAddition() {
-        final World world = new World(new HashMap<>(), 20, 20);
+        final World world = new World(new ConcurrentHashMap<>(), 20, 20);
         arrangeRandomEntitiesToMapAction.act(
             world);
         final Map<Coordinates, Entity> entities = world.entities();
