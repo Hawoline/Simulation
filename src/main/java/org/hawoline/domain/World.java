@@ -1,11 +1,7 @@
 package org.hawoline.domain;
 
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import org.hawoline.domain.entity.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public record World(ConcurrentMap<Coordinates, Entity> entities, int width, int height) {
 
@@ -33,10 +29,6 @@ public record World(ConcurrentMap<Coordinates, Entity> entities, int width, int 
   }
 
   public void move(Coordinates from, Coordinates to) {
-    if (entities.get(from) == null) {
-      System.out.println("From x: " + from.x());
-      System.out.println("From y: " + from.y());
-    }
     entities.put(to, entities.remove(from));
   }
 
