@@ -36,9 +36,6 @@ public class Simulation {
   }
 
   public void startSimulation() {
-    WorldAction initAction = new AddRandomEntitiesAction(5);
-    initAction.act(world);
-    renderer.render(world);
     isRunning = true;
     simulate();
   }

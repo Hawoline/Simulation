@@ -3,12 +3,8 @@ package org.hawoline.presentation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import org.hawoline.domain.AddGrassAction;
-import org.hawoline.domain.MakeMoveAction;
-import org.hawoline.domain.Simulation;
-import org.hawoline.domain.World;
 
-import org.hawoline.domain.WorldAction;
+import org.hawoline.domain.*;
 
 public class Main {
   public static void main(String[] args) {
@@ -25,6 +21,10 @@ public class Main {
     actions.add(new MakeMoveAction());
     actions.add(new AddGrassAction());
     Simulation simulation = new Simulation(world, consoleFieldRenderer, actions);
-    simulation.startSimulation();
+    WorldAction initAction = new AddRandomEntitiesAction(5);
+    initAction.act(world);
+    consoleFieldRenderer.render(world);
+    Menu menu = new Menu(simulation);
+    menu.inputSomething();
   }
 }

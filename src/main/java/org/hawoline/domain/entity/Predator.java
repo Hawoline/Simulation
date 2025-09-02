@@ -18,7 +18,6 @@ public class Predator extends Creature {
   @Override protected void tryEat(World world, Coordinates foodCoordinates) {
     Creature creature = (Creature) world.getEntity(foodCoordinates);
     creature.changeHealth(-attackPower);
-    System.out.println("Attack: " + attackPower);
     if (creature.getHealth() < 1) {
       changeHealth(10);
       world.remove(foodCoordinates);
