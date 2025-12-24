@@ -1,10 +1,6 @@
 package org.hawoline.domain.entity;
 
-import java.util.List;
-
-import org.hawoline.domain.BreadFirstEntitySearch;
 import org.hawoline.domain.Coordinates;
-import org.hawoline.domain.EntitySearch;
 import org.hawoline.domain.World;
 
 public class Herbivore extends Creature {

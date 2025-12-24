@@ -1,7 +1,5 @@
 package org.hawoline.domain;
 
-import java.util.Iterator;
-import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 import org.hawoline.domain.entity.Creature;

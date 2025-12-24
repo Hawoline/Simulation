@@ -5,8 +5,6 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.hawoline.domain.entity.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class AddRandomEntitiesAction implements WorldAction {
