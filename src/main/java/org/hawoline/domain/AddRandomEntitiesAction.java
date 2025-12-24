@@ -2,6 +2,7 @@ package org.hawoline.domain;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
 import org.hawoline.domain.entity.*;
 
 import java.util.HashMap;
@@ -30,6 +31,7 @@ public class AddRandomEntitiesAction implements WorldAction {
                 new Tree());
         return new World(result, world.width(), world.height());
     }
+
     public void act(World world) {
         ConcurrentMap<Coordinates, Entity> result = new ConcurrentHashMap<>(world.entities());
         for (int entity = 0; entity < maxRandomConcreteEntityTypeCount; entity++) {

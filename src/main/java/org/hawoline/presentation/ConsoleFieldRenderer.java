@@ -30,12 +30,13 @@ public class ConsoleFieldRenderer implements Renderer {
         System.out.println(lines);
     }
 
-    @Override public void drawStepCounter(int stepCounter) {
+    @Override
+    public void drawStepCounter(int stepCounter) {
         System.out.println(stepCounter);
     }
 
     private String getSpriteForEmptySquare() {
-        return " "+ EMPTY_SQUARE + " ";
+        return " " + EMPTY_SQUARE + " ";
     }
 
     private String getEntitySprite(Entity entity) {

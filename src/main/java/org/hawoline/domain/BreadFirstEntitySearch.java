@@ -27,7 +27,7 @@ public class BreadFirstEntitySearch implements EntitySearch {
                 return true;
             }
             visited.add(coordinates);
-            for (Coordinates child: getNeighbourCoordinates(coordinates)) {
+            for (Coordinates child : getNeighbourCoordinates(coordinates)) {
                 if (world.entityExits(child) && !world.getEntity(child).getType().equals(target)) {
                     continue;
                 }

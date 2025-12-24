@@ -4,28 +4,30 @@ import org.hawoline.domain.Coordinates;
 import org.hawoline.domain.World;
 
 public class Predator extends Creature {
-  private int attackPower;
-  public Predator(int speed, int health, int attackPower) {
-    super(speed, health);
-    this.attackPower = attackPower;
-  }
+    private int attackPower;
 
-  @Override
-  protected EntityType getTarget() {
-    return EntityType.HERBIVORE;
-  }
-
-  @Override protected void tryEat(World world, Coordinates foodCoordinates) {
-    Creature creature = (Creature) world.getEntity(foodCoordinates);
-    creature.changeHealth(-attackPower);
-    if (creature.getHealth() < 1) {
-      changeHealth(10);
-      world.remove(foodCoordinates);
+    public Predator(int speed, int health, int attackPower) {
+        super(speed, health);
+        this.attackPower = attackPower;
     }
-  }
 
-  @Override
-  public EntityType getType() {
-    return EntityType.PREDATOR;
-  }
+    @Override
+    protected EntityType getTarget() {
+        return EntityType.HERBIVORE;
+    }
+
+    @Override
+    protected void tryEat(World world, Coordinates foodCoordinates) {
+        Creature creature = (Creature) world.getEntity(foodCoordinates);
+        creature.changeHealth(-attackPower);
+        if (creature.getHealth() < 1) {
+            changeHealth(10);
+            world.remove(foodCoordinates);
+        }
+    }
+
+    @Override
+    public EntityType getType() {
+        return EntityType.PREDATOR;
+    }
 }
